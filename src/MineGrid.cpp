@@ -80,3 +80,4 @@ void MineGrid::setFlag(int x, int y, bool flag) {
 
 
 
+
