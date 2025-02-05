@@ -5,7 +5,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QMouseEvent>
-#include <QApplication> // Fix: Include QApplication
+#include <QApplication> // Include QApplication for quitting
 
 // Constructor: Initializes the Minesweeper game grid
 GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
@@ -113,6 +113,7 @@ void GameWindow::resetGame() {
         }
     }
 }
+
 
 
 
