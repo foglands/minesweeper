@@ -4,6 +4,7 @@
 #include "GameWindow.h"
 #include <QMessageBox>
 #include <QDebug>
+#include <QMouseEvent>
 
 // Constructor: Initializes the Minesweeper game grid
 GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
@@ -12,19 +13,20 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
 
     // Create the grid of buttons
     for (int x = 0; x < 30; ++x) {
+        std::vector<QPushButton*> row;
         for (int y = 0; y < 16; ++y) {
             QPushButton *btn = new QPushButton();
             btn->setFixedSize(30, 30);
             connect(btn, &QPushButton::clicked, this, &GameWindow::handleClick);
             gridLayout->addWidget(btn, y, x);
-            
-            // Store button position for safe access
-            buttonPositions[btn] = {x, y};
+            row.push_back(btn);
+            buttonPositions[btn] = {x, y}; // Store position
         }
+        buttons.push_back(row);
     }
 }
 
-// Handles user clicks on grid buttons
+// Handles user left-clicks
 void GameWindow::handleClick() {
     QPushButton *btn = qobject_cast<QPushButton*>(sender());
     
@@ -37,17 +39,62 @@ void GameWindow::handleClick() {
     int y = buttonPositions[btn].second;
 
     if (mineGrid->isMine(x, y)) {
-        QMessageBox::information(this, "Game Over", "You hit a mine!");
-        resetGame();
+        // Reveal all mines
+        for (int i = 0; i < 30; i++) {
+            for (int j = 0; j < 16; j++) {
+                if (mineGrid->isMine(i, j)) {
+                    buttons[i][j]->setIcon(QIcon("assets/mine.png"));
+                }
+            }
+        }
+
+        // Show Game Over popup
+        QMessageBox msgBox;
+        msgBox.setText("Game Over! You hit a mine.");
+        msgBox.setInformativeText("Do you want to restart?");
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::Yes);
+        int ret = msgBox.exec();
+
+        if (ret == QMessageBox::Yes) {
+            resetGame();
+        } else {
+            QApplication::quit();
+        }
+        return;
     } else {
         btn->setText(QString::number(mineGrid->adjacentMines(x, y)));
     }
 }
 
-// Resets the game state
-void GameWindow::resetGame() {
-    mineGrid->resetGrid();
-    for (auto &row : buttons)
-        for (auto *btn : row)
-            btn->setText("");
+// Handles right-click to place flags
+void GameWindow::handleRightClick(QMouseEvent *event) {
+    QPushButton *btn = qobject_cast<QPushButton*>(sender());
+
+    if (!btn || buttonPositions.find(btn) == buttonPositions.end()) {
+        qDebug() << "Error: Invalid button!";
+        return;
+    }
+
+    int x = buttonPositions[btn].first;
+    int y = buttonPositions[btn].second;
+
+    if (!mineGrid->isRevealed(x, y)) {
+        if (mineGrid->isFlagged(x, y)) {
+            btn->setIcon(QIcon()); // Remove flag
+            mineGrid->setFlag(x, y, false);
+        } else {
+            btn->setIcon(QIcon("assets/flag.png")); // Set flag icon
+            mineGrid->setFlag(x, y, true);
+        }
+    }
+}
+
+// Detect right-click
+void GameWindow::mousePressEvent(QMouseEvent *event) {
+    if (event->button() == Qt::RightButton) {
+        handleRightClick(event);
+    } else {
+        QWidget::mousePressEvent(event);
+    }
 }

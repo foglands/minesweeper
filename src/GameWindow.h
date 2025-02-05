@@ -1,5 +1,5 @@
 // GameWindow.h
-// This file defines the GameWindow class responsible for the Minesweeper UI.
+// Defines the GameWindow class responsible for the Minesweeper UI.
 
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
@@ -17,14 +17,19 @@ public:
     GameWindow(QWidget *parent = nullptr); // Constructor
     void resetGame(); // Function to reset the game
 
+protected:
+    void mousePressEvent(QMouseEvent *event) override; // Detect right-click
+
 private:
-    QGridLayout *gridLayout; // Layout for the game grid
-    MineGrid *mineGrid; // Logic class for handling the game grid
+    QGridLayout *gridLayout; // Layout for game grid
+    MineGrid *mineGrid; // Game logic class
     std::vector<std::vector<QPushButton*>> buttons; // Button grid
     std::map<QPushButton*, std::pair<int, int>> buttonPositions; // Stores button positions
 
 private slots:
-    void handleClick(); // Handles button clicks
+    void handleClick(); // Handles left-click
+    void handleRightClick(QMouseEvent *event); // Handles right-click
 };
 
 #endif // GAMEWINDOW_H
+
