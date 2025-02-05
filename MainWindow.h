@@ -1,5 +1,5 @@
 // MainWindow.h
-// This file defines the MainWindow class responsible for handling the main game window.
+// Defines the MainWindow class responsible for handling the main game window.
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -15,7 +15,7 @@ public:
     ~MainWindow(); // Destructor
 
 private:
-    GameWindow *gameWindow; // Pointer to the game window instance
+    GameWindow *gameWindow; // Pointer to game window instance
 };
 
 #endif // MAINWINDOW_H
