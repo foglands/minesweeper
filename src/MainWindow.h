@@ -15,7 +15,7 @@ public:
     ~MainWindow(); // Destructor
 
 private:
-    GameWindow *gameWindow; // Pointer to game window instance
+    GameWindow *gameWindow; // Pointer to the game window instance
 };
 
 #endif // MAINWINDOW_H
