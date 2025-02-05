@@ -321,6 +321,7 @@ debug/moc_MainWindow.cpp: ../../src/MainWindow.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qabstractbutton.h \
 		../../src/MineGrid.h \
+		C:/Qt/6.8.2/mingw_64/include/QtGui/QMouseEvent \
 		debug/moc_predefs.h \
 		C:/Qt/6.8.2/mingw_64/bin/moc.exe
 	C:\Qt\6.8.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/Admin/Documents/GitHub/minesweeper/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/6.8.2/mingw_64/mkspecs/win32-g++ -IC:/Users/Admin/Documents/GitHub/minesweeper -IC:/Users/Admin/Documents/GitHub/minesweeper/src -IC:/Qt/6.8.2/mingw_64/include -IC:/Qt/6.8.2/mingw_64/include/QtWidgets -IC:/Qt/6.8.2/mingw_64/include/QtGui -IC:/Qt/6.8.2/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\src\MainWindow.h -o debug\moc_MainWindow.cpp
@@ -524,6 +525,7 @@ debug/moc_GameWindow.cpp: ../../src/GameWindow.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qabstractbutton.h \
 		../../src/MineGrid.h \
+		C:/Qt/6.8.2/mingw_64/include/QtGui/QMouseEvent \
 		debug/moc_predefs.h \
 		C:/Qt/6.8.2/mingw_64/bin/moc.exe
 	C:\Qt\6.8.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/Admin/Documents/GitHub/minesweeper/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/6.8.2/mingw_64/mkspecs/win32-g++ -IC:/Users/Admin/Documents/GitHub/minesweeper -IC:/Users/Admin/Documents/GitHub/minesweeper/src -IC:/Qt/6.8.2/mingw_64/include -IC:/Qt/6.8.2/mingw_64/include/QtWidgets -IC:/Qt/6.8.2/mingw_64/include/QtGui -IC:/Qt/6.8.2/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\src\GameWindow.h -o debug\moc_GameWindow.cpp
@@ -750,7 +752,8 @@ debug/main.o: ../../src/main.cpp C:/Qt/6.8.2/mingw_64/include/QtWidgets/QApplica
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/QPushButton \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qabstractbutton.h \
-		../../src/MineGrid.h
+		../../src/MineGrid.h \
+		C:/Qt/6.8.2/mingw_64/include/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\src\main.cpp
 
 debug/MainWindow.o: ../../src/MainWindow.cpp ../../src/MainWindow.h \
@@ -955,7 +958,8 @@ debug/MainWindow.o: ../../src/MainWindow.cpp ../../src/MainWindow.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/QPushButton \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qabstractbutton.h \
-		../../src/MineGrid.h
+		../../src/MineGrid.h \
+		C:/Qt/6.8.2/mingw_64/include/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\MainWindow.o ..\..\src\MainWindow.cpp
 
 debug/GameWindow.o: ../../src/GameWindow.cpp ../../src/GameWindow.h \
@@ -1157,10 +1161,14 @@ debug/GameWindow.o: ../../src/GameWindow.cpp ../../src/GameWindow.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qabstractbutton.h \
 		../../src/MineGrid.h \
+		C:/Qt/6.8.2/mingw_64/include/QtGui/QMouseEvent \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/QMessageBox \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qdialog.h \
-		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qdialogbuttonbox.h
+		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		C:/Qt/6.8.2/mingw_64/include/QtCore/QDebug \
+		C:/Qt/6.8.2/mingw_64/include/QtWidgets/QApplication \
+		C:/Qt/6.8.2/mingw_64/include/QtWidgets/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\GameWindow.o ..\..\src\GameWindow.cpp
 
 debug/MineGrid.o: ../../src/MineGrid.cpp ../../src/MineGrid.h
