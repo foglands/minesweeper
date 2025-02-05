@@ -3,6 +3,7 @@
 
 #include "GameWindow.h"
 #include <QMessageBox>
+#include <QDebug>
 
 // Constructor: Initializes the Minesweeper game grid
 GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
@@ -16,21 +17,20 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
             btn->setFixedSize(30, 30);
             connect(btn, &QPushButton::clicked, this, &GameWindow::handleClick);
             gridLayout->addWidget(btn, y, x);
-        
-            // Store button coordinates in map
+            
+            // Store button position for safe access
             buttonPositions[btn] = {x, y};
         }
     }
-
 }
 
 // Handles user clicks on grid buttons
 void GameWindow::handleClick() {
     QPushButton *btn = qobject_cast<QPushButton*>(sender());
     
-    if (buttonPositions.find(btn) == buttonPositions.end()) {
-        qDebug() << "Error: Button not found in map!";
-        return; // Prevent segmentation fault
+    if (!btn || buttonPositions.find(btn) == buttonPositions.end()) {
+        qDebug() << "Error: Invalid button!";
+        return;
     }
 
     int x = buttonPositions[btn].first;
