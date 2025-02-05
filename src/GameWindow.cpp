@@ -40,11 +40,11 @@ void GameWindow::handleClick() {
     int y = buttonPositions[btn].second;
 
     if (mineGrid->isMine(x, y)) {
-        // Reveal all mines
+        // Reveal all mines when the game is lost
         for (int i = 0; i < 30; i++) {
             for (int j = 0; j < 16; j++) {
                 if (mineGrid->isMine(i, j)) {
-                    buttons[i][j]->setIcon(QIcon("assets/mine.png"));
+                    buttons[i][j]->setIcon(QIcon("assets/mine.png")); // Show mine icon
                 }
             }
         }
@@ -69,9 +69,7 @@ void GameWindow::handleClick() {
 }
 
 // Handles right-click to place flags
-void GameWindow::handleRightClick(QMouseEvent *event) {
-    QPushButton *btn = qobject_cast<QPushButton*>(sender());
-
+void GameWindow::handleRightClick(QPushButton *btn) {
     if (!btn || buttonPositions.find(btn) == buttonPositions.end()) {
         qDebug() << "Error: Invalid button!";
         return;
@@ -91,10 +89,13 @@ void GameWindow::handleRightClick(QMouseEvent *event) {
     }
 }
 
-// Detect right-click
+// Detect right-click on grid buttons
 void GameWindow::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::RightButton) {
-        handleRightClick(event);
+        QPushButton *btn = qobject_cast<QPushButton*>(childAt(event->pos()));
+        if (btn) {
+            handleRightClick(btn);
+        }
     } else {
         QWidget::mousePressEvent(event);
     }
@@ -112,5 +113,6 @@ void GameWindow::resetGame() {
         }
     }
 }
+
 
 
