@@ -1,5 +1,5 @@
 // MineGrid.h
-// Defines the MineGrid class, which handles game logic such as mine placement.
+// Defines the MineGrid class, handling game logic such as mine placement.
 
 #ifndef MINEGRID_H
 #define MINEGRID_H
@@ -10,22 +10,25 @@ class MineGrid {
 public:
     MineGrid(int width, int height, int mines); // Constructor
 
-    void resetGrid(); // Resets the game grid
-    bool isMine(int x, int y) const; // Checks if a cell contains a mine
-    int adjacentMines(int x, int y) const; // Counts adjacent mines
-    void revealCell(int x, int y); // Reveals a cell
-    void flagCell(int x, int y); // Flags a cell
-    bool isGameWon() const; // Checks if the game is won
-    bool isGameOver() const; // Checks if the game is lost
+    void resetGrid();
+    bool isMine(int x, int y) const;
+    int adjacentMines(int x, int y) const;
+    void revealCell(int x, int y);
+    void flagCell(int x, int y);
+    bool isGameWon() const;
+    bool isGameOver() const;
+    bool isRevealed(int x, int y) const;
+    bool isFlagged(int x, int y) const;
+    void setFlag(int x, int y, bool flag);
 
 private:
-    int width, height, mineCount; // Grid size and number of mines
-    std::vector<std::vector<int>> grid; // Grid data structure (-1 means mine)
-    std::vector<std::vector<bool>> revealed; // Tracks revealed cells
-    std::vector<std::vector<bool>> flagged; // Tracks flagged cells
+    int width, height, mineCount;
+    std::vector<std::vector<int>> grid;
+    std::vector<std::vector<bool>> revealed;
+    std::vector<std::vector<bool>> flagged;
 
-    void generateMines(); // Generates mines randomly
-    bool isWithinBounds(int x, int y) const; // Helper function for bounds checking
+    void generateMines();
+    bool isWithinBounds(int x, int y) const;
 };
 
 #endif // MINEGRID_H
