@@ -1,3 +1,6 @@
+// MainWindow.cpp
+// Implements the MainWindow class, setting up the main UI and event handling.
+
 #include "MainWindow.h"
 
 // Constructor: Initializes the main window and game window
