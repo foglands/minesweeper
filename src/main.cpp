@@ -1,9 +1,17 @@
+// main.cpp
+// Entry point for the Minesweeper game using Qt.
+
 #include <QApplication>
-#include "GameWindow.h"
+#include "MainWindow.h"
 
 int main(int argc, char *argv[]) {
+    // Initialize the Qt application
     QApplication app(argc, argv);
-    GameWindow window;
+    
+    // Create and display the main window
+    MainWindow window;
     window.show();
+    
+    // Start the event loop
     return app.exec();
 }
