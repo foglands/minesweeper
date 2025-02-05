@@ -11,18 +11,17 @@
 #include <map>
 
 class GameWindow : public QWidget {
-private:
-    std::map<QPushButton*, std::pair<int, int>> buttonPositions;
-};
+    Q_OBJECT
 
 public:
     GameWindow(QWidget *parent = nullptr); // Constructor
     void resetGame(); // Function to reset the game
 
 private:
-    QGridLayout *gridLayout; // Layout for game grid
+    QGridLayout *gridLayout; // Layout for the game grid
     MineGrid *mineGrid; // Logic class for handling the game grid
     std::vector<std::vector<QPushButton*>> buttons; // Button grid
+    std::map<QPushButton*, std::pair<int, int>> buttonPositions; // Stores button positions
 
 private slots:
     void handleClick(); // Handles button clicks
