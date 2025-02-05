@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QMouseEvent>
+#include <QApplication> // Fix: Include QApplication
 
 // Constructor: Initializes the Minesweeper game grid
 GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
@@ -59,7 +60,7 @@ void GameWindow::handleClick() {
         if (ret == QMessageBox::Yes) {
             resetGame();
         } else {
-            QApplication::quit();
+            QApplication::quit(); // Fix: QApplication is now properly included
         }
         return;
     } else {
@@ -98,3 +99,4 @@ void GameWindow::mousePressEvent(QMouseEvent *event) {
         QWidget::mousePressEvent(event);
     }
 }
+
