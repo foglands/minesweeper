@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include "MineGrid.h"
 #include <map>
+#include <QMouseEvent>
 
 class GameWindow : public QWidget {
     Q_OBJECT
@@ -28,7 +29,7 @@ private:
 
 private slots:
     void handleClick(); // Handles left-click
-    void handleRightClick(QMouseEvent *event); // Handles right-click
+    void handleRightClick(QPushButton *btn); // Handles right-click for flagging
 };
 
 #endif // GAMEWINDOW_H
