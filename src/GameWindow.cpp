@@ -30,7 +30,7 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
 // Handles user left-clicks
 void GameWindow::handleClick() {
     QPushButton *btn = qobject_cast<QPushButton*>(sender());
-    
+
     if (!btn || buttonPositions.find(btn) == buttonPositions.end()) {
         qDebug() << "Error: Invalid button!";
         return;
@@ -60,7 +60,7 @@ void GameWindow::handleClick() {
         if (ret == QMessageBox::Yes) {
             resetGame();
         } else {
-            QApplication::quit(); // Fix: QApplication is now properly included
+            QApplication::quit();
         }
         return;
     } else {
@@ -99,4 +99,18 @@ void GameWindow::mousePressEvent(QMouseEvent *event) {
         QWidget::mousePressEvent(event);
     }
 }
+
+// Resets the game state
+void GameWindow::resetGame() {
+    mineGrid->resetGrid();
+
+    // Reset all button text and icons
+    for (int x = 0; x < 30; ++x) {
+        for (int y = 0; y < 16; ++y) {
+            buttons[x][y]->setText("");
+            buttons[x][y]->setIcon(QIcon()); // Clear icons
+        }
+    }
+}
+
 
