@@ -42,7 +42,7 @@ bool MineGrid::isWithinBounds(int x, int y) const {
 
 // Returns the number of mines adjacent to (x, y)
 int MineGrid::adjacentMines(int x, int y) const {
-    if (!isWithinBounds(x, y)) return 0; // Prevents out-of-bounds errors
+    if (!isWithinBounds(x, y)) return 0;
 
     int count = 0;
     for (int dx = -1; dx <= 1; dx++) {
@@ -59,6 +59,23 @@ int MineGrid::adjacentMines(int x, int y) const {
 // Checks if a tile contains a mine
 bool MineGrid::isMine(int x, int y) const {
     return isWithinBounds(x, y) && grid[x][y] == -1;
+}
+
+// Returns true if the tile at (x, y) has been revealed
+bool MineGrid::isRevealed(int x, int y) const {
+    return isWithinBounds(x, y) && revealed[x][y];
+}
+
+// Returns true if the tile at (x, y) has been flagged
+bool MineGrid::isFlagged(int x, int y) const {
+    return isWithinBounds(x, y) && flagged[x][y];
+}
+
+// Sets or removes a flag at (x, y)
+void MineGrid::setFlag(int x, int y, bool flag) {
+    if (isWithinBounds(x, y) && !revealed[x][y]) {
+        flagged[x][y] = flag;
+    }
 }
 
 
