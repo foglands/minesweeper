@@ -35,9 +35,14 @@ void MineGrid::generateMines() {
     }
 }
 
+// Returns true if (x, y) is within valid board range
+bool MineGrid::isWithinBounds(int x, int y) const {
+    return x >= 0 && x < width && y >= 0 && y < height;
+}
+
 // Returns the number of mines adjacent to (x, y)
 int MineGrid::adjacentMines(int x, int y) const {
-    if (!isWithinBounds(x, y)) return 0;
+    if (!isWithinBounds(x, y)) return 0; // Prevents out-of-bounds errors
 
     int count = 0;
     for (int dx = -1; dx <= 1; dx++) {
@@ -55,5 +60,6 @@ int MineGrid::adjacentMines(int x, int y) const {
 bool MineGrid::isMine(int x, int y) const {
     return isWithinBounds(x, y) && grid[x][y] == -1;
 }
+
 
 
