@@ -1,5 +1,15 @@
 #include "GameWindow.h"
 #include <QMessageBox>
+#include <QPixmap>
+
+// Set an icon for a flagged tile
+QPixmap flagIcon("assets/flag.png");
+button->setIcon(QIcon(flagIcon));
+button->setIconSize(QSize(30, 30));
+
+// Set an icon for a mine
+QPixmap mineIcon("assets/mine.png");
+button->setIcon(QIcon(mineIcon));
 
 GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
     gridLayout = new QGridLayout(this);
