@@ -1,20 +1,15 @@
+// GameWindow.cpp
+// Implements the Minesweeper game logic and UI interaction.
+
 #include "GameWindow.h"
 #include <QMessageBox>
-#include <QPixmap>
 
-// Set an icon for a flagged tile
-QPixmap flagIcon("assets/flag.png");
-button->setIcon(QIcon(flagIcon));
-button->setIconSize(QSize(30, 30));
-
-// Set an icon for a mine
-QPixmap mineIcon("assets/mine.png");
-button->setIcon(QIcon(mineIcon));
-
+// Constructor: Initializes the Minesweeper game grid
 GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
     gridLayout = new QGridLayout(this);
-    mineGrid = new MineGrid(30, 16, 99);
+    mineGrid = new MineGrid(30, 16, 99); // 30x16 grid with 99 mines
 
+    // Create the grid of buttons
     for (int x = 0; x < 30; ++x) {
         std::vector<QPushButton*> row;
         for (int y = 0; y < 16; ++y) {
@@ -28,6 +23,7 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
     }
 }
 
+// Handles user clicks on grid buttons
 void GameWindow::handleClick() {
     QPushButton *btn = qobject_cast<QPushButton*>(sender());
     int x, y;
@@ -41,6 +37,7 @@ void GameWindow::handleClick() {
     }
 }
 
+// Resets the game state
 void GameWindow::resetGame() {
     mineGrid->resetGrid();
     for (auto &row : buttons)
