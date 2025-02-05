@@ -11,23 +11,30 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
 
     // Create the grid of buttons
     for (int x = 0; x < 30; ++x) {
-        std::vector<QPushButton*> row;
         for (int y = 0; y < 16; ++y) {
             QPushButton *btn = new QPushButton();
             btn->setFixedSize(30, 30);
             connect(btn, &QPushButton::clicked, this, &GameWindow::handleClick);
             gridLayout->addWidget(btn, y, x);
-            row.push_back(btn);
+        
+            // Store button coordinates in map
+            buttonPositions[btn] = {x, y};
         }
-        buttons.push_back(row);
     }
+
 }
 
 // Handles user clicks on grid buttons
 void GameWindow::handleClick() {
     QPushButton *btn = qobject_cast<QPushButton*>(sender());
-    int x, y;
-    gridLayout->getItemPosition(gridLayout->indexOf(btn), &y, &x, nullptr, nullptr);
+    
+    if (buttonPositions.find(btn) == buttonPositions.end()) {
+        qDebug() << "Error: Button not found in map!";
+        return; // Prevent segmentation fault
+    }
+
+    int x = buttonPositions[btn].first;
+    int y = buttonPositions[btn].second;
 
     if (mineGrid->isMine(x, y)) {
         QMessageBox::information(this, "Game Over", "You hit a mine!");
