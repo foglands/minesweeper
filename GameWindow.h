@@ -8,9 +8,12 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include "MineGrid.h"
+#include <map>
 
 class GameWindow : public QWidget {
-    Q_OBJECT
+private:
+    std::map<QPushButton*, std::pair<int, int>> buttonPositions;
+};
 
 public:
     GameWindow(QWidget *parent = nullptr); // Constructor
