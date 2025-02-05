@@ -33,6 +33,22 @@ void MineGrid::generateMines() {
     }
 }
 
+// Returns the number of mines adjacent to (x, y)
+int MineGrid::adjacentMines(int x, int y) {
+    int count = 0;
+    
+    // Iterate through all adjacent cells
+    for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+            int nx = x + dx, ny = y + dy;
+            if (nx >= 0 && nx < width && ny >= 0 && ny < height && isMine(nx, ny)) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
 // Checks if a tile contains a mine
 bool MineGrid::isMine(int x, int y) {
     return grid[x][y] == -1;
