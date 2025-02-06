@@ -1,110 +1,61 @@
-# Minesweeper in C++ using Qt
+# Minesweeper - Qt C++ Implementation
 
 ## Overview
-This project is a simple implementation of the classic **Minesweeper** game using **C++** and **Qt**. The game features a **30x16 grid** with **99 randomly placed mines**. The objective is to clear the board without clicking on any mines. 
+This is a simple implementation of the classic Minesweeper game using **C++ and Qt**. The game features a **30x16 grid** with **99 mines**, a graphical user interface, and basic game mechanics.
 
 ## Features
-- **Graphical interface using Qt**
-- **Left-click to reveal a tile**
-- **Right-click to flag/unflag a tile**
-- **Randomized mine placement**
-- **Winning and losing conditions** with popup messages
-- **Game restart functionality**
-- **Optimized game logic for performance**
+- Left-click to **reveal** a tile.
+- Right-click to **flag/unflag** a tile.
+- Automatically opens empty spaces when a tile with **zero adjacent mines** is clicked.
+- A **win condition** when all non-mine tiles are revealed.
+- A **game-over condition** when clicking on a mine.
+- A **restart option** via the menu bar.
 
-## Requirements
-To compile and run the game, you need:
-- **A Unix/Linux environment (or Windows with WSL)**
-- **Qt development tools (Qt 5 or Qt 6 recommended)**
-- **C++ compiler (g++, clang, or MSVC)**
-- **Git (for version control, optional)**
+## Prerequisites
+- **Qt 5** or later installed on your system.
+- A **Unix/Linux environment** (e.g., Ubuntu, macOS, or Windows with WSL).
+- A C++ compiler that supports **C++11** or later.
 
-## Installation & Setup
-### Linux & MacOS
-1. Install Qt development tools:
-   ```bash
-   sudo apt update
-   sudo apt install qtbase5-dev qtchooser qttools5-dev-tools qttools5-dev qmake
-   ```
-   *(For MacOS, use Homebrew: `brew install qt`)*
+## Installation and Compilation
+1. Clone or download the project files.
+2. Open a terminal and navigate to the project directory.
+3. Run the following commands:
 
-2. Clone the project repository:
-   ```bash
-   git clone https://github.com/foglands/minesweeper.git
-   cd minesweeper
-   ```
-
-3. Compile the project:
-   ```bash
-   qmake
+   ```sh
+   qmake Minesweeper.pro
    make
    ```
 
-4. Run the game:
-   ```bash
+4. Run the executable:
+
+   ```sh
    ./Minesweeper
    ```
 
-### Windows (WSL Recommended)
-1. Install **Windows Subsystem for Linux (WSL)** with Ubuntu.
-2. Install Qt and required dependencies:
-   ```bash
-   sudo apt update && sudo apt install qtbase5-dev qtchooser qttools5-dev-tools qttools5-dev qmake
-   ```
-3. Follow the **Linux** compilation and execution steps above.
+## Game Controls
+| Action            | Mouse Input |
+|------------------|------------|
+| Reveal a tile   | Left-click  |
+| Flag a tile     | Right-click |
+| Restart Game    | Menu > New Game |
+| Exit Game       | Menu > Exit |
 
-## How to Play
-- **Left-click** on a tile to reveal it.
-- **Right-click** on a tile to flag/unflag it as a suspected mine.
-- **If you click on a mine, you lose the game.**
-- **If you reveal all non-mine tiles, you win!**
-- **After losing or winning, you can restart the game from the popup window.**
+## Asset Files
+The game uses the following PNG image files for its UI, stored in the `assets/` folder:
+- **flag.png** - Flag icon for marking mines.
+- **mine.png** - Mine icon for when a mine is revealed.
+- **revealed.png** - Generic revealed tile.
+- **unrevealed.png** - Default tile before clicking.
+- **tile_0.png** to **tile_8.png** - Tiles showing adjacent mine counts.
 
-## Troubleshooting
-- **Game doesn’t start?** Ensure Qt is properly installed:
-  ```bash
-  qmake --version
-  ```
-- **Errors while compiling?** Run `qmake` before `make` to regenerate the Makefile.
-- **Graphics not showing in WSL?** Install an X server like **VcXsrv** and run:
-  ```bash
-  export DISPLAY=:0
-  ```
-
-## File Structure
-```
-/minesweeper/
-│── src/
-│   ├── main.cpp
-│   ├── MineGrid.h
-│   ├── MineGrid.cpp
-│   ├── GameWindow.h
-│   ├── GameWindow.cpp
-│   ├── MainWindow.h
-│   ├── MainWindow.cpp
-│── assets/ (icons for flags, mines)
-│── Minesweeper.pro (Qt project file)
-│── README.md
-```
-
-## Contribution
-1. Fork the repository on GitHub.
-2. Create a feature branch:
-   ```bash
-   git checkout -b feature-branch
-   ```
-3. Commit your changes and push to your fork:
-   ```bash
-   git commit -m "Add new feature"
-   git push origin feature-branch
-   ```
-4. Submit a pull request for review.
-
-## Author
-- **Foglands**
-- Peng Peng
-- Contact: ppeng8@uwo.ca
-- Date: **February 2025**
+## Known Issues and Future Improvements
+- **Right-click support on some platforms may require additional handling.**
+- **A timer and leaderboard could be added in future versions.**
+- **Improved UI styling and animations can enhance user experience.**
 
 ## License
-This project is licensed under the **MIT License**.
+This project is open-source and can be freely modified and distributed.
+
+## Credits
+Developed as part of a **C++ programming assignment** using **Qt** for graphical rendering.
+
