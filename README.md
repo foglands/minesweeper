@@ -23,7 +23,7 @@ This is a simple implementation of the classic Minesweeper game using **C++ and 
 
    ```sh
    qmake Minesweeper.pro
-   make
+   make -j$(nproc)
    ```
 
 4. Run the executable:
