@@ -1,17 +1,27 @@
 # Qt project file for Minesweeper
-QT       += widgets
-CONFIG   += c++11
+
+QT += core gui widgets
+
+CONFIG += c++11
+
+# Define the target application
 TARGET = Minesweeper
 TEMPLATE = app
 
-# List of source files.
-SOURCES += src/main.cpp \
-           src/MainWindow.cpp \
-           src/GameWindow.cpp \
-           src/MineGrid.cpp
+# Include the source and header files
+SOURCES += \
+    main.cpp \
+    MainWindow.cpp \
+    GameWindow.cpp \
+    MineGrid.cpp
 
-# List of header files.
-HEADERS += src/MainWindow.h \
-           src/GameWindow.h \
-           src/MineGrid.h
+HEADERS += \
+    MainWindow.h \
+    GameWindow.h \
+    MineGrid.h
 
+# Resource file for assets (if needed)
+RESOURCES += assets.qrc
+
+# Compiler settings
+QMAKE_CXXFLAGS += -Wall -Wextra
