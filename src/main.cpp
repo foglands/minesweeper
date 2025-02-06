@@ -1,13 +1,18 @@
 #include <QApplication>
 #include "MainWindow.h"
 
-/*
- * Entry point for the Minesweeper application.
- * Creates a QApplication instance and displays the MainWindow.
+/**
+ * @brief The main entry point of the Minesweeper application.
+ * @param argc The number of command-line arguments.
+ * @param argv The command-line arguments.
+ * @return The application's exit status.
  */
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     QApplication app(argc, argv);
-    MainWindow window;
-    window.show();
+
+    MainWindow mainWindow;
+    mainWindow.show();
+
     return app.exec();
 }
