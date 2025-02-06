@@ -2,41 +2,40 @@
 #include <QGridLayout>
 #include <QMessageBox>
 #include <QRandomGenerator>
-#include <QIcon>
 #include <QDebug>
 
 /*
  * MineGrid Constructor:
- * - Creates a grid layout.
- * - Initializes the cells and buttons vectors.
- * - Creates a button for each cell and adds it to the layout.
- * - Connects each button's left and right click signals to the corresponding slots.
- * - Calls functions to place mines and calculate adjacent mine counts.
+ * - Creates and configures the grid layout.
+ * - Initializes cell state and corresponding buttons.
+ * - Connects button signals to the appropriate slots.
+ * - Calls functions to place mines and compute adjacent mine counts.
  */
 MineGrid::MineGrid(QWidget *parent) : QWidget(parent)
 {
+    // Create and configure the grid layout.
     gridLayout = new QGridLayout(this);
     gridLayout->setSpacing(1);
     gridLayout->setContentsMargins(1, 1, 1, 1);
 
-    // Resize the cells and buttons 2D vectors.
+    // Resize the 2D vectors for cells and buttons.
     cells.resize(ROWS, std::vector<Cell>(COLS));
     buttons.resize(ROWS, std::vector<CellButton*>(COLS, nullptr));
 
-    // Create buttons for each cell.
+    // Create buttons for each cell and add them to the layout.
     for (int row = 0; row < ROWS; ++row) {
         for (int col = 0; col < COLS; ++col) {
             CellButton *button = new CellButton(row, col, this);
             buttons[row][col] = button;
             gridLayout->addWidget(button, row, col);
 
-            // Connect button signals to the MineGrid's slots.
+            // Connect left-click and right-click signals.
             connect(button, &CellButton::leftClicked, this, &MineGrid::handleLeftClick);
             connect(button, &CellButton::rightClicked, this, &MineGrid::handleRightClick);
         }
     }
 
-    // Initialize the board: place mines and compute adjacent counts.
+    // Initialize the game board.
     initializeBoard();
 }
 
@@ -49,7 +48,7 @@ void MineGrid::initializeBoard() {
 }
 
 /*
- * Randomly places MINES number of mines on the board.
+ * Randomly places the specified number of mines on the board.
  */
 void MineGrid::placeMines() {
     int placedMines = 0;
@@ -75,7 +74,7 @@ void MineGrid::calculateAdjacencies() {
                 continue;
             }
             int count = 0;
-            // Check all adjacent cells (8 directions).
+            // Check all 8 neighboring cells.
             for (int dr = -1; dr <= 1; ++dr) {
                 for (int dc = -1; dc <= 1; ++dc) {
                     if (dr == 0 && dc == 0)
@@ -91,9 +90,8 @@ void MineGrid::calculateAdjacencies() {
 }
 
 /*
- * Handles a left-click event on a cell:
- * - Reveals the cell.
- * - Checks for win condition.
+ * Slot for handling left-click events on a cell.
+ * Reveals the cell and checks for the win condition.
  */
 void MineGrid::handleLeftClick(int row, int col) {
     if (row < 0 || row >= ROWS || col < 0 || col >= COLS)
@@ -104,16 +102,15 @@ void MineGrid::handleLeftClick(int row, int col) {
     // Reveal the cell.
     revealCell(row, col);
 
-    // Check if the player has won after this move.
+    // Check if all non-mine cells have been opened.
     if (checkWin()) {
         gameOver(true);
     }
 }
 
 /*
- * Handles a right-click event on a cell:
- * - Cycles the cell's marking state: None -> Flag -> Question -> None.
- * - Updates the icon or text accordingly.
+ * Slot for handling right-click events on a cell.
+ * Cycles through marking states: None -> Flag -> Question -> None.
  */
 void MineGrid::handleRightClick(int row, int col) {
     if (row < 0 || row >= ROWS || col < 0 || col >= COLS)
@@ -121,20 +118,20 @@ void MineGrid::handleRightClick(int row, int col) {
     if (cells[row][col].isOpened)
         return;
 
-    // Cycle through marking states.
+    // Cycle the marking state.
     if (cells[row][col].mark == Cell::None) {
         cells[row][col].mark = Cell::Flag;
         buttons[row][col]->setIcon(QIcon("assets/flag.png"));
         buttons[row][col]->setIconSize(QSize(30, 30));
     } else if (cells[row][col].mark == Cell::Flag) {
         cells[row][col].mark = Cell::Question;
-        // For a question mark, remove the icon and show text.
+        // For a question mark, remove the icon and show a text marker.
         buttons[row][col]->setIcon(QIcon());
         buttons[row][col]->setText("?");
     } else {
         cells[row][col].mark = Cell::None;
         buttons[row][col]->setText("");
-        // Restore the unrevealed icon.
+        // Restore the unrevealed cell icon.
         buttons[row][col]->setIcon(QIcon("assets/unrevealed.png"));
         buttons[row][col]->setIconSize(QSize(30, 30));
     }
@@ -143,9 +140,8 @@ void MineGrid::handleRightClick(int row, int col) {
 /*
  * Reveals the cell at (row, col):
  * - If the cell contains a mine, displays the mine icon and ends the game.
- * - If the cell has adjacent mines, shows the appropriate numbered tile.
- * - If the cell is empty (zero adjacent mines), shows the blank revealed tile and
- *   recursively reveals adjacent cells.
+ * - If the cell has adjacent mines (> 0), shows the numbered tile.
+ * - If the cell has 0 adjacent mines, shows tile_0.png and recursively reveals neighbors.
  */
 void MineGrid::revealCell(int row, int col) {
     if (row < 0 || row >= ROWS || col < 0 || col >= COLS)
@@ -153,16 +149,16 @@ void MineGrid::revealCell(int row, int col) {
     if (cells[row][col].isOpened)
         return;
 
-    // Mark the cell as opened and clear any mark.
+    // Mark the cell as opened and remove any previous mark.
     cells[row][col].isOpened = true;
     cells[row][col].mark = Cell::None;
     buttons[row][col]->setEnabled(false);
-
+    
     // Clear any previous text or icon.
     buttons[row][col]->setText("");
     buttons[row][col]->setIcon(QIcon());
 
-    // If the cell contains a mine, display the mine icon and trigger game over.
+    // If the cell is a mine, display the mine icon and end the game.
     if (cells[row][col].hasMine) {
         buttons[row][col]->setIcon(QIcon("assets/mine.png"));
         buttons[row][col]->setIconSize(QSize(30, 30));
@@ -170,21 +166,22 @@ void MineGrid::revealCell(int row, int col) {
         return;
     }
 
-    // If the cell has adjacent mines, show the numbered tile.
+    // If the cell has adjacent mines, display the corresponding numbered tile.
     if (cells[row][col].adjacentMines > 0) {
         QString tilePath = QString("assets/tile_%1.png").arg(cells[row][col].adjacentMines);
         buttons[row][col]->setIcon(QIcon(tilePath));
         buttons[row][col]->setIconSize(QSize(30, 30));
     } else {
-        // If no adjacent mines, show the blank revealed tile and reveal adjacent cells.
-        buttons[row][col]->setIcon(QIcon("assets/revealed.png"));
+        // For a cell with 0 adjacent mines, use tile_0.png.
+        buttons[row][col]->setIcon(QIcon("assets/tile_0.png"));
         buttons[row][col]->setIconSize(QSize(30, 30));
+        // Recursively reveal adjacent cells.
         revealAdjacentZeros(row, col);
     }
 }
 
 /*
- * Recursively reveals adjacent cells that have zero adjacent mines.
+ * Recursively reveals adjacent cells that have 0 adjacent mines.
  */
 void MineGrid::revealAdjacentZeros(int row, int col) {
     for (int dr = -1; dr <= 1; ++dr) {
@@ -192,24 +189,27 @@ void MineGrid::revealAdjacentZeros(int row, int col) {
             int r = row + dr, c = col + dc;
             if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
                 if (!cells[r][c].isOpened && !cells[r][c].hasMine) {
-                    // Mark adjacent cell as opened.
+                    // Mark the cell as opened.
                     cells[r][c].isOpened = true;
                     buttons[r][c]->setEnabled(false);
                     buttons[r][c]->setText("");
                     buttons[r][c]->setIcon(QIcon());
+                    
                     // Clear any mark.
                     if (cells[r][c].mark != Cell::None) {
                         cells[r][c].mark = Cell::None;
                     }
-                    // Reveal the cell based on its adjacent mine count.
+                    
+                    // Reveal the cell: if it has adjacent mines, show the numbered tile.
                     if (cells[r][c].adjacentMines > 0) {
                         QString tilePath = QString("assets/tile_%1.png").arg(cells[r][c].adjacentMines);
                         buttons[r][c]->setIcon(QIcon(tilePath));
                         buttons[r][c]->setIconSize(QSize(30, 30));
                     } else {
-                        buttons[r][c]->setIcon(QIcon("assets/revealed.png"));
+                        // Otherwise, show tile_0.png and recursively reveal its neighbors.
+                        buttons[r][c]->setIcon(QIcon("assets/tile_0.png"));
                         buttons[r][c]->setIconSize(QSize(30, 30));
-                        revealAdjacentZeros(r, c); // Recursively reveal further.
+                        revealAdjacentZeros(r, c);
                     }
                 }
             }
@@ -218,8 +218,8 @@ void MineGrid::revealAdjacentZeros(int row, int col) {
 }
 
 /*
- * Checks if the player has won by ensuring that all non-mine cells are opened.
- * @return true if the win condition is met.
+ * Checks if all non-mine cells have been revealed.
+ * @return true if the player has won, false otherwise.
  */
 bool MineGrid::checkWin() {
     for (int row = 0; row < ROWS; ++row) {
@@ -233,10 +233,9 @@ bool MineGrid::checkWin() {
 
 /*
  * Ends the game:
- * - Reveals all mines.
- * - Displays a message box indicating whether the player won or lost.
- * - Disables all buttons.
- * @param won: true if the player won, false if lost.
+ * - Reveals all mines on the board.
+ * - Displays a message box indicating a win or loss.
+ * - Disables further interaction with all cells.
  */
 void MineGrid::gameOver(bool won) {
     // Reveal all mines.
@@ -260,6 +259,7 @@ void MineGrid::gameOver(bool won) {
         }
     }
 }
+
 
 
 
