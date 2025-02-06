@@ -2,28 +2,54 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMenuBar>
+#include <QAction>
+#include "GameWindow.h"
 
-// Forward declaration of GameWindow so we can use it as a pointer.
-class GameWindow;
-
-/*
- * MainWindow class
- *
- * Inherits from QMainWindow. It creates the main window of the application,
- * including the menu bar with "New Game" and "Exit" actions, and holds the GameWindow.
+/**
+ * @class MainWindow
+ * @brief The MainWindow class manages the overall application UI.
+ * 
+ * This class provides a menu bar for game controls and integrates 
+ * the GameWindow for Minesweeper gameplay.
  */
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
+
 public:
+    /**
+     * @brief Constructor for MainWindow.
+     * @param parent The parent QWidget.
+     */
     explicit MainWindow(QWidget *parent = nullptr);
+
+    /**
+     * @brief Destructor for MainWindow.
+     */
     ~MainWindow();
-    
-private slots:
-    // Slot to start a new game.
-    void newGame();
-    
+
 private:
-    GameWindow *gameWindow;  // The central game widget.
+    GameWindow *gameWindow; ///< The main Minesweeper game window.
+    QMenuBar *menuBar; ///< The menu bar.
+    QAction *newGameAction; ///< Action for starting a new game.
+    QAction *exitAction; ///< Action for exiting the application.
+
+    /**
+     * @brief Initializes the menu bar.
+     */
+    void setupMenuBar();
+
+private slots:
+    /**
+     * @brief Slot function to start a new game.
+     */
+    void startNewGame();
+
+    /**
+     * @brief Slot function to exit the application.
+     */
+    void exitGame();
 };
 
 #endif // MAINWINDOW_H
